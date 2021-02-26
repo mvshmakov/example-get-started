@@ -30,52 +30,52 @@ stages:
       size: 2480
     params:
       params.yaml:
-        featurize.max_features: 1500
+        featurize.max_features: 3000
         featurize.ngrams: 2
     outs:
     - path: data/features
-      md5: 4de51b54708b84ebb50c7c12fd57179f.dir
-      size: 10896627
+      md5: a079f4c29277a48a254ef3a0e695b8fe.dir
+      size: 12730083
       nfiles: 2
   train:
     cmd: python src/train.py data/features model.pkl
     deps:
     - path: data/features
-      md5: 4de51b54708b84ebb50c7c12fd57179f.dir
-      size: 10896627
+      md5: a079f4c29277a48a254ef3a0e695b8fe.dir
+      size: 12730083
       nfiles: 2
     - path: src/train.py
       md5: 3ffc5530112ca028ac61a3c8efeb0516
       size: 975
     params:
       params.yaml:
-        train.min_split: 2
-        train.n_est: 50
+        train.min_split: 64
+        train.n_est: 100
         train.seed: 20170428
     outs:
     - path: model.pkl
-      md5: 17b3d1efc339b416c4b5615b1ce1b97e
-      size: 2712300
+      md5: 484fab565aec49c5f704a3783235d237
+      size: 2206748
   evaluate:
     cmd: python src/evaluate.py model.pkl data/features scores.json prc.json roc.json
     deps:
     - path: data/features
-      md5: 4de51b54708b84ebb50c7c12fd57179f.dir
-      size: 10896627
+      md5: a079f4c29277a48a254ef3a0e695b8fe.dir
+      size: 12730083
       nfiles: 2
     - path: model.pkl
-      md5: 17b3d1efc339b416c4b5615b1ce1b97e
-      size: 2712300
+      md5: 484fab565aec49c5f704a3783235d237
+      size: 2206748
     - path: src/evaluate.py
       md5: 3ea1ba392cbc82e5e1da35fcbca33d25
       size: 1453
     outs:
     - path: prc.json
-      md5: d3c57bccfa924bee85e00f674b8724f9
-      size: 2188
+      md5: e8c03fe8318c7bfefe244b358ec27240
+      size: 439855
     - path: roc.json
-      md5: 1ddccb18365f709831fc786e854b7c19
-      size: 1981
+      md5: ecbb0c24fd4b87e77f69af245b0c2303
+      size: 34515
     - path: scores.json
-      md5: cf2511547330abda419320c37af67ab2
+      md5: ac54fc864dedb796c381112ec4283166
       size: 63
